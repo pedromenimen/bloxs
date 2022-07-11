@@ -1,7 +1,8 @@
 from http import HTTPStatus
 
-from app.models import Conta, Pessoa
-from flask import jsonify
+import ipdb
+from app.models import Conta, Pessoa, Transacao
+from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.exceptions import NotFound
 
@@ -24,6 +25,11 @@ def check_transactions():
                 HTTPStatus.UNPROCESSABLE_ENTITY,
             )
         else:
-            return jsonify(account.transacoes), HTTPStatus.OK
+            page = request.args.get("page", 1, type=int)
+            transaction_list = Transacao.query.filter_by(idConta=account.idConta)
+            pagination = transaction_list.paginate(
+                page=page, per_page=10, error_out=False
+            )
+            return jsonify(pagination.items), HTTPStatus.OK
     except NotFound as e:
         return e.description, HTTPStatus.NOT_FOUND

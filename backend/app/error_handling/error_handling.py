@@ -5,7 +5,7 @@ from jsonschema import ValidationError
 
 def bad_request(error):
     description: ValidationError = error.description
-    if hasattr(description, "validator"):
+    if type(description) != str:
         if description.validator == "pattern":
             field = description.path[0]
             return jsonify({"erro": pattern_messages[field]}), 400
@@ -43,9 +43,11 @@ def bad_request(error):
             min_length = description.validator_value
             return (
                 jsonify(
-                    {"erro": f"O campo {field} aceita apenas valores de 2 casas decimais."}
+                    {
+                        "erro": f"O campo {field} aceita apenas valores de 2 casas decimais."
+                    }
                 ),
                 400,
             )
     else:
-        return jsonify({"erro": "O corpo da requisição deve ser do formato json."})
+        return jsonify({"erro": "O corpo da requisição deve ser do formato json."}), 400
