@@ -1,0 +1,735 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bloxs-api",
+    "description": "API de banco digital para teste técnico da bloxs",
+    "version": "0.1"
+  },
+  "paths": {
+    "/api/user/register/": {
+      "post": {
+        "security": [],
+        "description": "Registro de usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "dataNascimento": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "1": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "2": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "3": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "4": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": 1234,\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "5": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"dro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "6": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": 1,\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "7": {
+                  "value": "{\r\n\t\"dataNascimento\": 0,\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "8": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02111998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                },
+                "9": {
+                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "cpf": {
+                      "type": "string"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "dataNascimento": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idPessoa\": 18, \n  \"nome\": \"Pedro\", \n  \"cpf\": \"00000000000\", \n  \"dataNascimento\": \"Mon, 02 Nov 1998 00:00:00 GMT\"\n}\n"
+                  },
+                  "1": {
+                    "value": "{\n  \"idPessoa\": 14, \n  \"nome\": \"Pedro\", \n  \"cpf\": \"00000000000\", \n  \"dataNascimento\": \"Mon, 02 Nov 1998 00:00:00 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campos inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"O tamanho do campo password \\u00e9 de no m\\u00ednimo 8 caracteres.\"\n}\n"
+                  },
+                  "1": {
+                    "value": "{\n  \"erro\": \"O campo password deve ser do tipo string.\"\n}\n"
+                  },
+                  "2": {
+                    "value": "{\n  \"erro\": \"O tamanho do campo nome \\u00e9 de no m\\u00ednimo 4 caracteres.\"\n}\n"
+                  },
+                  "3": {
+                    "value": "{\n  \"erro\": \"O campo nome deve ser do tipo string.\"\n}\n"
+                  },
+                  "4": {
+                    "value": "{\n  \"erro\": \"O campo dataNascimento deve ser do tipo string.\"\n}\n"
+                  },
+                  "5": {
+                    "value": "{\n  \"erro\": \"Formato inv\\u00e1lido para dataNascimento, tente dd/mm/aaaa ou dd-mm-aaaa.\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Tentativa de criação de usuário com cpf já existente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"Cpf j\\u00e1 cadastrado.\"\n}\n"
+                  },
+                  "1": {
+                    "value": "{\n  \"erro\": \"Cpf j\\u00e1 cadastrado.\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/login/": {
+      "post": {
+        "security": [],
+        "description": "Rota de login de usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n\t\"cpf\": \"00000000000\",\r\n\t\"password\": \"Pass@1234\"\r\n}"
+                },
+                "1": {
+                  "value": "{\r\n\t\"cpf\": \"00000000001\",\r\n\t\"password\": \"Pass@1234\"\r\n}"
+                },
+                "2": {
+                  "value": "{\r\n\t\"cpf\": \"00000000000\",\r\n\t\"password\": \"Pass@\"\r\n}"
+                },
+                "3": {
+                  "value": "{\r\n\t\"cpf\": \"00000000000\",\r\n\t\"password\": \"Pass@12345\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login efetuado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NzQ5ODczNywianRpIjoiN2NiZWNiN2YtY2YzMi00ZTIzLTk1ZGQtZGM4YzE2YTU4NGJiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZFBlc3NvYSI6MTh9LCJuYmYiOjE2NTc0OTg3MzcsImV4cCI6MTY1NzU4NTEzN30.95EZYGeVTD9mmfos4eT20H1pt60xbNChsduYNYRuAkU\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email ou senha incorreto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"Email ou senha incorreto.\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"Usu\\u00e1rio n\\u00e3o encontrado.\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/register/": {
+      "post": {
+        "description": "Rota de criação de conta bancária",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "limiteSaqueDiario": {
+                    "type": "string"
+                  },
+                  "tipoConta": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n\t\"tipoConta\": \"002\",\r\n\t\"limiteSaqueDiario\": 1000\r\n}"
+                },
+                "1": {
+                  "value": "{\r\n\t\"tipoConta\": \"2\",\r\n\t\"limiteSaqueDiario\": 1000\r\n}"
+                },
+                "2": {
+                  "value": "{\r\n\t\"tipoConta\": \"002\",\r\n\t\"limiteSaqueDiario\": 1000\r\n}"
+                },
+                "3": {
+                  "value": "{\r\n\t\"tipoConta\": \"002\",\r\n\t\"limiteSaqueDiario\": 1000\r\n}"
+                },
+                "4": {
+                  "value": "{\r\n\t\"tipoConta\": \"002\",\r\n\t\"limiteSaqueDiario\": \"1000\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Conta criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "idConta": {
+                      "type": "integer"
+                    },
+                    "limiteSaqueDiario": {
+                      "type": "number"
+                    },
+                    "saldo": {
+                      "type": "number"
+                    },
+                    "dataCriacao": {
+                      "type": "string"
+                    },
+                    "flagAtivo": {
+                      "type": "boolean"
+                    },
+                    "tipoConta": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idConta\": 9, \n  \"idPessoa\": 18, \n  \"saldo\": 0.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 21:30:02 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "O usuário já tem uma conta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"Voc\\u00ea j\\u00e1 tem uma conta.\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transaction/deposit/": {
+      "patch": {
+        "description": "Rota de deposito bancario",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "valor": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n\t\"valor\": 1000\r\n}"
+                },
+                "1": {
+                  "value": "{\r\n\t\"valor\": 1000\r\n}"
+                },
+                "2": {
+                  "value": "{\r\n\t\"valor\": \"1000\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deposito concluído com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "idConta": {
+                      "type": "integer"
+                    },
+                    "limiteSaqueDiario": {
+                      "type": "number"
+                    },
+                    "saldo": {
+                      "type": "number"
+                    },
+                    "dataCriacao": {
+                      "type": "string"
+                    },
+                    "flagAtivo": {
+                      "type": "boolean"
+                    },
+                    "tipoConta": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idConta\": 10, \n  \"idPessoa\": 18, \n  \"saldo\": 1000.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 22:10:03 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tentativa de depósito bancario sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transaction/withdraw/": {
+      "patch": {
+        "description": "Rota de saque bancário.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "valor": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n\t\"valor\": 1000\r\n}"
+                },
+                "1": {
+                  "value": "{\r\n\t\"valor\": \"1000\"\r\n}"
+                },
+                "2": {
+                  "value": "{\r\n\t\"valor\": 900\r\n}"
+                },
+                "3": {
+                  "value": "{\r\n\t\"valor\": 900\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Saque concluído com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "idConta": {
+                      "type": "integer"
+                    },
+                    "limiteSaqueDiario": {
+                      "type": "number"
+                    },
+                    "saldo": {
+                      "type": "number"
+                    },
+                    "dataCriacao": {
+                      "type": "string"
+                    },
+                    "flagAtivo": {
+                      "type": "boolean"
+                    },
+                    "tipoConta": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idConta\": 10, \n  \"idPessoa\": 18, \n  \"saldo\": 100.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 22:12:21 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tentativa de saque sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Saldo insuficiente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"erro\": \"Saldo insuficiente. Saldo atual: 100.0\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transaction/check-transactions/": {
+      "get": {
+        "description": "Rota de listagem de transações",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "5"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de transacoes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "0": {
+                    "value": "[\n  {\n    \"idTransacao\": 193, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:53:01 GMT\"\n  }, \n  {\n    \"idTransacao\": 194, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:55:41 GMT\"\n  }, \n  {\n    \"idTransacao\": 195, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:55:47 GMT\"\n  }, \n  {\n    \"idTransacao\": 196, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:56:06 GMT\"\n  }, \n  {\n    \"idTransacao\": 197, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:56:07 GMT\"\n  }, \n  {\n    \"idTransacao\": 198, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:56:08 GMT\"\n  }, \n  {\n    \"idTransacao\": 199, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:56:13 GMT\"\n  }, \n  {\n    \"idTransacao\": 200, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:57:06 GMT\"\n  }, \n  {\n    \"idTransacao\": 201, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:57:13 GMT\"\n  }, \n  {\n    \"idTransacao\": 202, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 21:57:14 GMT\"\n  }\n]\n"
+                  },
+                  "1": {
+                    "value": "[\n  {\n    \"idTransacao\": 213, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 214, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 215, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 216, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 217, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 218, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:03:33 GMT\"\n  }, \n  {\n    \"idTransacao\": 219, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:04:30 GMT\"\n  }, \n  {\n    \"idTransacao\": 220, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:09:10 GMT\"\n  }, \n  {\n    \"idTransacao\": 221, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:10:03 GMT\"\n  }, \n  {\n    \"idTransacao\": 222, \n    \"idConta\": 10, \n    \"valor\": 900.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:12:21 GMT\"\n  }\n]\n"
+                  },
+                  "2": {
+                    "value": "[\n  {\n    \"idTransacao\": 223, \n    \"idConta\": 10, \n    \"valor\": 1000.0, \n    \"dataTransacao\": \"Sun, 10 Jul 2022 22:50:02 GMT\"\n  }\n]\n"
+                  },
+                  "3": {
+                    "value": "[]\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tentativa de listagem de contas sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/check-balance/": {
+      "get": {
+        "description": "Rota de checagem de saldo",
+        "responses": {
+          "200": {
+            "description": "Informações da conta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "idConta": {
+                      "type": "integer"
+                    },
+                    "limiteSaqueDiario": {
+                      "type": "number"
+                    },
+                    "saldo": {
+                      "type": "number"
+                    },
+                    "dataCriacao": {
+                      "type": "string"
+                    },
+                    "flagAtivo": {
+                      "type": "boolean"
+                    },
+                    "tipoConta": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idConta\": 10, \n  \"idPessoa\": 18, \n  \"saldo\": 0.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 21:39:49 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tentativa de checagem de saldo sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/block-account/": {
+      "patch": {
+        "description": "Rota de bloqueio de conta",
+        "responses": {
+          "204": {
+            "description": "Conta foi bloqueada com sucesso"
+          },
+          "401": {
+            "description": "Tentativa de bloqueio de conta sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
