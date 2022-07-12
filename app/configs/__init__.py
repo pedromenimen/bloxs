@@ -7,4 +7,4 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
     JWT_SECRET_KEY = os.getenv("SECRET")
     JSON_SORT_KEYS = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.getenv("CLEARDB_DATABASE_URL")
