@@ -4,6 +4,6 @@ setup:
       as: DATABASE
 build:
   docker:
-    web: dockerfile
+    web: Dockerfile
 run:
   web: flask run --host=0.0.0.0 --port=5000
