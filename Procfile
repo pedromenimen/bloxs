@@ -1,3 +1,7 @@
+setup:
+  addons:
+    - plan: cleardb-mysql
+      as: DATABASE
 build:
   docker:
     web: dockerfile
