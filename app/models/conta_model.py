@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from app.configs.database import db
-from flask import jsonify
 from sqlalchemy.orm import backref, relationship
 
 

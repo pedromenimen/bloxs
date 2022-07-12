@@ -14,8 +14,14 @@ def create_user():
     try:
         body = request.get_json()
         password_to_hash = body.pop("password")
-        cpf:str = body.pop("cpf")
-        new_user = Pessoa(**body, cpf=cpf.replace("-", "").replace(".", ""))
+        cpf: str = body.pop("cpf")
+        dataNascimento = body.pop("dataNascimento")
+        dataNascimentoFormatada = Pessoa.format_datetime(dataNascimento)
+        new_user = Pessoa(
+            **body,
+            cpf=cpf.replace("-", "").replace(".", ""),
+            dataNascimento=dataNascimentoFormatada,
+        )
         new_user.password = password_to_hash
         db.session.add(new_user)
         db.session.commit()

@@ -5,9 +5,24 @@
     "description": "API de banco digital para teste técnico da bloxs",
     "version": "0.1"
   },
+  "tags": [
+    {
+      "name": "Usuário",
+      "description": "Rotas relacionadas ao usuário"
+    },
+    {
+      "name": "Conta",
+      "description": "Rotas relacionadas às conta"
+    },
+    {
+      "name": "Transação",
+      "description": "Rotas relacionadas às transações"
+    }
+  ],
   "paths": {
     "/api/user/register/": {
       "post": {
+        "tags": ["Usuário"],
         "security": [],
         "description": "Registro de usuário",
         "requestBody": {
@@ -32,39 +47,31 @@
               },
               "examples": {
                 "0": {
-                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
-                },
-                "1": {
-                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
-                },
-                "2": {
-                  "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
-                },
-                "3": {
                   "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "4": {
+                "1": {
                   "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": 1234,\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "5": {
+                "2": {
                   "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"dro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "6": {
+                "3": {
                   "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": 1,\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "7": {
+                "4": {
                   "value": "{\r\n\t\"dataNascimento\": 0,\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "8": {
+                "5": {
                   "value": "{\r\n\t\"dataNascimento\": \"02111998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 },
-                "9": {
+                "6": {
                   "value": "{\r\n\t\"dataNascimento\": \"02/11/1998\",\r\n\t\"nome\": \"Pedro\",\r\n\t\"password\": \"Pass@1234\",\r\n\t\"cpf\": \"00000000000\"\r\n}"
                 }
               }
             }
           }
         },
+
         "responses": {
           "201": {
             "description": "Usuário criado com sucesso",
@@ -159,8 +166,10 @@
         }
       }
     },
+
     "/api/user/login/": {
       "post": {
+        "tags": ["Usuário"],
         "security": [],
         "description": "Rota de login de usuário",
         "requestBody": {
@@ -260,6 +269,7 @@
     },
     "/api/accounts/register/": {
       "post": {
+        "tags": ["Conta"],
         "description": "Rota de criação de conta bancária",
         "requestBody": {
           "content": {
@@ -357,8 +367,106 @@
         }
       }
     },
+    "/api/accounts/check-balance/": {
+      "get": {
+        "tags": ["Conta"],
+        "description": "Rota de checagem de saldo",
+        "responses": {
+          "200": {
+            "description": "Informações da conta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idPessoa": {
+                      "type": "integer"
+                    },
+                    "idConta": {
+                      "type": "integer"
+                    },
+                    "limiteSaqueDiario": {
+                      "type": "number"
+                    },
+                    "saldo": {
+                      "type": "number"
+                    },
+                    "dataCriacao": {
+                      "type": "string"
+                    },
+                    "flagAtivo": {
+                      "type": "boolean"
+                    },
+                    "tipoConta": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"idConta\": 10, \n  \"idPessoa\": 18, \n  \"saldo\": 0.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 21:39:49 GMT\"\n}\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tentativa de checagem de saldo sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/block-account/": {
+      "patch": {
+        "tags": ["Conta"],
+        "description": "Rota de bloqueio de conta",
+        "responses": {
+          "204": {
+            "description": "Conta foi bloqueada com sucesso"
+          },
+          "401": {
+            "description": "Tentativa de bloqueio de conta sem token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/transaction/deposit/": {
       "patch": {
+        "tags": ["Transação"],
         "description": "Rota de deposito bancario",
         "requestBody": {
           "content": {
@@ -449,6 +557,7 @@
     },
     "/api/transaction/withdraw/": {
       "patch": {
+        "tags": ["Transação"],
         "description": "Rota de saque bancário.",
         "requestBody": {
           "content": {
@@ -562,6 +671,7 @@
     },
     "/api/transaction/check-transactions/": {
       "get": {
+        "tags": ["Transação"],
         "description": "Rota de listagem de transações",
         "parameters": [
           {
@@ -570,7 +680,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "5"
+            "example": "1"
           }
         ],
         "responses": {
@@ -601,101 +711,6 @@
           },
           "401": {
             "description": "Tentativa de listagem de contas sem token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "msg": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "0": {
-                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/accounts/check-balance/": {
-      "get": {
-        "description": "Rota de checagem de saldo",
-        "responses": {
-          "200": {
-            "description": "Informações da conta",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "idPessoa": {
-                      "type": "integer"
-                    },
-                    "idConta": {
-                      "type": "integer"
-                    },
-                    "limiteSaqueDiario": {
-                      "type": "number"
-                    },
-                    "saldo": {
-                      "type": "number"
-                    },
-                    "dataCriacao": {
-                      "type": "string"
-                    },
-                    "flagAtivo": {
-                      "type": "boolean"
-                    },
-                    "tipoConta": {
-                      "type": "integer"
-                    }
-                  }
-                },
-                "examples": {
-                  "0": {
-                    "value": "{\n  \"idConta\": 10, \n  \"idPessoa\": 18, \n  \"saldo\": 0.0, \n  \"limiteSaqueDiario\": 1000.0, \n  \"flagAtivo\": true, \n  \"tipoConta\": 2, \n  \"dataCriacao\": \"Sun, 10 Jul 2022 21:39:49 GMT\"\n}\n"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Tentativa de checagem de saldo sem token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "msg": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "0": {
-                    "value": "{\n  \"msg\": \"Missing Authorization Header\"\n}\n"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/accounts/block-account/": {
-      "patch": {
-        "description": "Rota de bloqueio de conta",
-        "responses": {
-          "204": {
-            "description": "Conta foi bloqueada com sucesso"
-          },
-          "401": {
-            "description": "Tentativa de bloqueio de conta sem token",
             "content": {
               "application/json": {
                 "schema": {

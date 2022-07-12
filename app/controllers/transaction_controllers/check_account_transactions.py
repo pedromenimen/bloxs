@@ -1,6 +1,5 @@
 from http import HTTPStatus
 
-import ipdb
 from app.models import Conta, Pessoa, Transacao
 from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
