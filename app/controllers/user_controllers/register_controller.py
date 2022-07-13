@@ -5,8 +5,7 @@ from app.models.pessoa_model import Pessoa
 from app.schemas import register_user_schema
 from flask import jsonify, request
 from flask_expects_json import expects_json
-from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 
 
 @expects_json(register_user_schema)
@@ -17,6 +16,9 @@ def create_user():
         cpf: str = body.pop("cpf")
         dataNascimento = body.pop("dataNascimento")
         dataNascimentoFormatada = Pessoa.format_datetime(dataNascimento)
+        user = Pessoa.query.filter_by(cpf=cpf).first()
+        if user:
+            return jsonify({"erro": "Esse cpf já está em uso."})
         new_user = Pessoa(
             **body,
             cpf=cpf.replace("-", "").replace(".", ""),
@@ -28,13 +30,5 @@ def create_user():
         return jsonify(new_user), 201
     except BadRequest as e:
         return e.description, HTTPStatus.BAD_REQUEST
-    except IntegrityError as e:
-        field = str(e.orig).split("Key")[1].split("=")[0][2:-1]
-        return (
-            jsonify({"erro": f"{field[0].upper()+field[1:]} já cadastrado."}),
-            HTTPStatus.CONFLICT,
-        )
-    except TypeError as e:
-        
-        invalid_field = e.args[0].split(" is an invalid")[0].strip("'")
-        return jsonify({"erro": f"Campo inválido: {invalid_field}."}), 400
+    except NotFound as e:
+        return e.description, HTTPStatus.NOT_FOUND
