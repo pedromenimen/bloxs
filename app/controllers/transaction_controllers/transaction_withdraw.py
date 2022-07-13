@@ -1,3 +1,5 @@
+import json
+from datetime import datetime
 from http import HTTPStatus
 
 from app.configs.database import db
@@ -23,13 +25,31 @@ def transaction_withdraw():
         if not account.flagAtivo:
             return jsonify({"erro": "Esta conta está bloqueada."}), HTTPStatus.FORBIDDEN
         body = request.get_json()
-        transaction: Transacao = Transacao(idConta=account.idConta, valor=body["valor"])
+        withdraw_limit = account.limiteSaqueDiario
+        withdrawn_today = -sum(
+            [
+                transação.valor
+                for transação in account.transacoes
+                if transação.dataTransacao.strftime("%d/%m/%Y")
+                == datetime.now().strftime("%d/%m/%Y")
+                and transação.valor < 0
+            ]
+        )
+        if withdrawn_today + body["valor"] > withdraw_limit:
+            return jsonify(
+                {
+                    "erro": f"Limite de saque diário atingido, tente um valor menor que {withdraw_limit-withdrawn_today}"
+                }
+            )
+        transaction: Transacao = Transacao(
+            idConta=account.idConta, valor=-body["valor"]
+        )
         if transaction.valor > account.saldo:
             return (
                 jsonify({"erro": f"Saldo insuficiente. Saldo atual: {account.saldo}"}),
                 HTTPStatus.UNPROCESSABLE_ENTITY,
             )
-        account.withdraw(transaction.valor)
+        account.withdraw(+transaction.valor)
         db.session.add(transaction)
         db.session.commit()
         last_transaction = Transacao.query.filter_by(
