@@ -1,4 +1,3 @@
-from datetime import datetime
 from http import HTTPStatus
 
 from app.configs.database import db

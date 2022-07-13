@@ -35,5 +35,6 @@ def create_user():
             HTTPStatus.CONFLICT,
         )
     except TypeError as e:
+        
         invalid_field = e.args[0].split(" is an invalid")[0].strip("'")
         return jsonify({"erro": f"Campo inválido: {invalid_field}."}), 400

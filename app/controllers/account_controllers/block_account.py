@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 from app.configs.database import db
-from app.models import Conta, Pessoa, Transacao
+from app.models import Conta, Pessoa
 from flask import jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.exceptions import NotFound

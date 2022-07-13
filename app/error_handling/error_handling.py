@@ -4,6 +4,10 @@ from jsonschema import ValidationError
 
 
 def bad_request(error):
+    """
+    Função criada para lidar com os tipos de validações criadas a partir
+    de schemas json, que irão validar o json enviado na requisição das rotas.
+    """
     description: ValidationError = error.description
     if type(description) != str:
         if description.validator == "pattern":
