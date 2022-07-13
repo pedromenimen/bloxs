@@ -49,7 +49,7 @@ def transaction_withdraw():
                 jsonify({"erro": f"Saldo insuficiente. Saldo atual: {account.saldo}"}),
                 HTTPStatus.UNPROCESSABLE_ENTITY,
             )
-        account.withdraw(+transaction.valor)
+        account.withdraw(-transaction.valor)
         db.session.add(transaction)
         db.session.commit()
         last_transaction = Transacao.query.filter_by(
