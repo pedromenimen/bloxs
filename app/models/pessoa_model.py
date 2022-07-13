@@ -28,5 +28,5 @@ class Pessoa(db.Model):
     def verify_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
 
-    def format_datetime(value, format="%Y-%m-%d"):
-        return datetime.strptime(value, "%d-%m-%Y").strftime(format)
+    def format_datetime(value, format="%Y/%m/%d"):
+        return datetime.strptime(value, "%d/%m/%Y").strftime(format)

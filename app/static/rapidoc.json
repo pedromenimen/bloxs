@@ -134,7 +134,7 @@
                     "value": "{\n  \"erro\": \"O campo dataNascimento deve ser do tipo string.\"\n}\n"
                   },
                   "5": {
-                    "value": "{\n  \"erro\": \"Formato inv\\u00e1lido para dataNascimento, tente dd/mm/aaaa ou dd-mm-aaaa.\"\n}\n"
+                    "value": "{\n  \"erro\": \"Formato inv\\u00e1lido para dataNascimento, tente dd/mm/aaaa.\"\n}\n"
                   }
                 }
               }
@@ -166,7 +166,6 @@
         }
       }
     },
-
     "/api/user/login/": {
       "post": {
         "tags": ["Usuário"],
